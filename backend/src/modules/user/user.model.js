@@ -1,6 +1,40 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+const SessionSchema = new mongoose.Schema(
+  {
+    refreshToken: {
+      type: String,
+      required: true,
+    },
+    device: {
+      type: String,
+      required: true,
+      default: 'unknown',
+    },
+    ipAddress: {
+      type: String,
+      required: true,
+      default: 'unknown',
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiryAt: {
+      type: Date,
+      required: true,
+    },
+    lastUsedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    _id: true,
+  }
+);
+
 const UserSchema = new mongoose.Schema(
   {
     fullName: {
@@ -13,7 +47,9 @@ const UserSchema = new mongoose.Schema(
 
     username: {
       type: String,
-      required: true,
+      required: function () {
+        return !this.googleId;
+      },
       unique: true,
       lowercase: true,
       trim: true,
@@ -21,6 +57,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: 30,
       match: /^[a-z0-9_]+$/,
       index: true,
+      sparse: true,
     },
 
     email: {
@@ -74,6 +111,12 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    tokenVersion: {
+      type: Number,
+      default: 0,
+    },
+
+    sessions: [SessionSchema],
 
     preferences: {
       theme: {

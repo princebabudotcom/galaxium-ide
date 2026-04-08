@@ -1,4 +1,5 @@
 import config from '../config/config.js';
+import logger from '../logger/winston.logger.js';
 import userDao from '../modules/user/user.dao.js';
 import ApiError from '../utils/ApiError.js';
 import jwt from 'jsonwebtoken';
@@ -13,18 +14,24 @@ const protect = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
 
-    const decoded = jwt.verify(token, config.JWT_SECRET);
-    // console.log('DECODED:', decoded);
+    const decoded = jwt.verify(token, config.JWT_ACCESS_SECRET);
 
-    const user = await userDao.findById(decoded.id); // 
+    // console.log(decoded);
+    const user = await userDao.findById(decoded.id); //
 
-    if (!user) throw new ApiError(404, 'User not found');
+    // console.log({
+    //   decoded,
+    //   user: user.tokenVersion,
+    // });
+
+    if (!user || user.tokenVersion !== decoded.version)
+      throw new ApiError(401, 'Session invalidated. Please log in again.');
 
     req.user = user;
 
     next();
   } catch (error) {
-    console.error('AUTH ERROR:', error); // 🔥 MUST
+    throw new ApiError(401, 'Unauthorized');
     next(error); // 🔥 DON'T OVERRIDE
   }
 };

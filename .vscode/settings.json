@@ -1,0 +1,36 @@
+{
+  "postman.settings.dotenv-detection-notification-visibility": false,
+
+  // 🔥 Emmet (very important)
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+
+  // ⚡ IntelliSense (autocomplete)
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.acceptSuggestionOnEnter": "on",
+
+  // 🧠 Better suggestions ranking
+  "editor.suggestSelection": "first",
+  "editor.wordBasedSuggestions": "allDocuments",
+
+  // 🚀 Inline suggestions (AI-like feel)
+  "editor.inlineSuggest.enabled": true,
+
+  // 🧩 Snippets + suggestions together
+  "editor.snippetSuggestions": "inline",
+
+  // 🔍 Parameter hints (very useful)
+  "editor.parameterHints.enabled": true,
+
+  // 🧹 Clean UI
+  "editor.suggest.showIcons": true,
+  "editor.suggest.showStatusBar": true
+}

@@ -9,6 +9,15 @@ const app = express();
 const httpServer = http.createServer(app);
 
 // middleware
+
+// use cors
+import cors from 'cors';
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use(
   express.json({
     limit: '10mb',
@@ -18,6 +27,11 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use(express.static('public')); // for serving static files from the "public" directory
 app.use(cookieParser()); // for parsing cookies in incoming requests
 app.use(morganLogger);
+
+// use passport
+import passport from './config/passport.js';
+
+app.use(passport.initialize());
 
 // routes
 import authRoutes from './modules/auth/auth.route.js';

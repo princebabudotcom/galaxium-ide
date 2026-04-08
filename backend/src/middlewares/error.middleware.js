@@ -16,7 +16,7 @@ const errorMiddleware = (err, req, res, next) => {
   // ✅ Handle Mongoose validation error
   if (err.name === 'ValidationError') {
     statusCode = 400;
-    errors = Object.values(err.errors).map(e => e.message);
+    errors = Object.values(err.errors).map((e) => e.message);
   }
 
   const response = {

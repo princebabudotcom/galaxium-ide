@@ -17,6 +17,8 @@ const registerService = async (userData) => {
     name: user.fullName,
     email: user.email,
     username: user.username,
+    sessions: user.sessions,
+    version: user.tokenVersion,
   };
 };
 
@@ -34,6 +36,8 @@ const loginService = async (loginData) => {
     name: user.fullName,
     email: user.email,
     username: user.username,
+    sessions: user.sessions,
+    version: user.tokenVersion,
   };
 };
 
