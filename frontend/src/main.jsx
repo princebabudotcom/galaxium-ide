@@ -5,11 +5,14 @@ import App from "./App/App";
 import { BrowserRouter, RouterProvider } from "react-router-dom";
 import AuthProvider from "./context/auth/AuthProvider";
 import router from "./routes/AppRoutes";
+import { ToastProvider } from "./components/layout/Popup";
 
 createRoot(document.getElementById("root")).render(
   <>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ToastProvider>
   </>,
 );

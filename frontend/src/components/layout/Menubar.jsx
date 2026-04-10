@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ChevronDown, Bell, Settings } from "lucide-react";
 
 export default function TopMenuBar() {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-9 bg-[#0D1117] border-b border-[#1f2937] flex items-center justify-between px-3 text-xs">
       {/* LEFT MENU */}
@@ -29,7 +30,11 @@ export default function TopMenuBar() {
         <span className="text-green-400 text-[10px]">● GPT-4o</span>
 
         <Bell size={14} className="cursor-pointer hover:text-white" />
-        <Settings size={14} className="cursor-pointer hover:text-white" />
+        <Settings
+          onClick={() => navigate("/settings")}
+          size={14}
+          className="cursor-pointer hover:text-white"
+        />
 
         <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-[10px] font-semibold">
           P

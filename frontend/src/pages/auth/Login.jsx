@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import authApi from "../../apis/auth.api";
+import { useToast } from "../../components/layout/Popup";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
     identifier: "",
     password: "",
   });
+
+  const { addToast } = useToast();
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -59,6 +62,10 @@ export default function LoginPage() {
       console.log(error.response);
     }
   };
+
+  useEffect(() => {
+    addToast("Login page");
+  }, []);
   return (
     <div className="h-screen flex items-center justify-center bg-[#0D1117] text-xs text-[#9CA3AF]">
       <div className="w-full max-w-sm border border-[#1F2937] rounded-md p-6">

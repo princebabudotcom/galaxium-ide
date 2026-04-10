@@ -114,6 +114,47 @@ const logoutService = async (token) => {
   return;
 };
 
+// ai-config
+
+const aiConfigService = async (data, userId) => {
+  if (!data) {
+    throw new ApiError(400, 'AI config data required');
+  }
+
+  if (data.maxTokens !== undefined) {
+    if (typeof data.maxTokens !== 'number') {
+      throw new ApiError(400, 'maxTokens must be a number');
+    }
+
+    if (data.maxTokens < 1 || data.maxTokens > 10000) {
+      throw new ApiError(400, 'maxTokens must be between 1 and 10000');
+    }
+  }
+
+  const user = await userDao.updateAiConfig(data, userId);
+  if (!user) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  return {
+    success: true,
+    message: `User AI config updated sucessfully`,
+  };
+};
+
+const userAiConfigService = async (userId) => {
+  const aiConfig = await userDao.aiConfig(userId);
+
+  if (!aiConfig) {
+    throw new ApiError(404, 'AI config not found');
+  }
+
+  return {
+    success: true,
+    aiConfig,
+  };
+};
+
 export default {
   generateAccessToken,
   generateRefreshToken,
@@ -121,4 +162,8 @@ export default {
   hashToken,
   udateUserSessions,
   logoutService,
+
+  // ai-config
+  aiConfigService,
+  userAiConfigService,
 };

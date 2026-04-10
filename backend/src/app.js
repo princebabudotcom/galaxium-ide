@@ -8,6 +8,10 @@ const app = express();
 
 const httpServer = http.createServer(app);
 
+// intit socketServer
+import { initSocket } from './socket/index.js';
+initSocket(httpServer);
+
 // middleware
 
 // use cors
@@ -35,8 +39,12 @@ app.use(passport.initialize());
 
 // routes
 import authRoutes from './modules/auth/auth.route.js';
+import userRoutes from './modules/user/user.route.js';
+import aiRoutes from './modules/ai/ai.route.js';
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/ai', aiRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).json({

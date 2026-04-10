@@ -18,6 +18,10 @@ import SystemPage from "../pages/settings/System";
 import ModelsPage from "../pages/settings/Models";
 import NotFoundPage from "../pages/PageNotFound";
 import LogoutPage from "../pages/auth/Logout";
+import Home from "../pages/Home/Home";
+import ProjectPage from "../pages/project/ProjectPage";
+import ProjectCom from "../components/project/ProjectComp";
+import ChatPanel from "../components/messages/Chat.container";
 
 const router = createBrowserRouter([
   /* ---------------- PUBLIC ---------------- */
@@ -62,11 +66,21 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Home page</div>,
+        element: <div>Home </div>,
       },
       {
         path: "/logout",
         element: <LogoutPage />,
+      },
+      {
+        path: "project",
+        element: <ProjectPage />,
+        children: [
+          {
+            path: ":id",
+            element: <ProjectCom />,
+          },
+        ],
       },
 
       {

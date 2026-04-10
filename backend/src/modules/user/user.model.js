@@ -34,6 +34,99 @@ const SessionSchema = new mongoose.Schema(
     _id: true,
   }
 );
+const AiConfigSchema = new mongoose.Schema(
+  {
+    /* ---------- MODEL ---------- */
+    model: {
+      type: String,
+      default: 'gpt-4o',
+      trim: true,
+    },
+
+    autoSelectModel: {
+      type: Boolean,
+      default: false,
+    },
+
+    /* ---------- GENERATION ---------- */
+    temperature: {
+      type: Number,
+      default: 0.7,
+      min: 0,
+      max: 1,
+    },
+
+    maxTokens: {
+      type: Number,
+      default: 2048,
+      min: 1,
+      max: 10000, // 🔥 prevent insane values
+      set: (v) => Number(v), // 🔥 ensures string → number
+    },
+
+    topP: {
+      type: Number,
+      default: 1.0,
+      min: 0,
+      max: 1,
+    },
+
+    frequencyPenalty: {
+      type: Number,
+      default: 0.0,
+      min: 0,
+      max: 2,
+    },
+
+    presencePenalty: {
+      type: Number,
+      default: 0.0,
+      min: 0,
+      max: 2,
+    },
+
+    /* ---------- RESPONSE STYLE ---------- */
+    responseStyle: {
+      type: String,
+      enum: ['friendly', 'professional', 'developer', 'strict', 'creative'],
+      default: 'friendly',
+    },
+
+    /* ---------- SYSTEM ---------- */
+    systemInstructions: {
+      type: String,
+      default: 'You are an AI developer assistant.',
+      trim: true,
+      maxlength: 2000, // 🔥 prevent abuse
+    },
+
+    enableMemory: {
+      type: Boolean,
+      default: true,
+    },
+
+    /* ---------- EXECUTION ---------- */
+    autoExecute: {
+      type: Boolean,
+      default: false,
+    },
+
+    streaming: {
+      type: Boolean,
+      default: true,
+    },
+
+    safeMode: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+    _id: false, // cleaner docs
+  }
+);
 
 const UserSchema = new mongoose.Schema(
   {
@@ -116,7 +209,13 @@ const UserSchema = new mongoose.Schema(
       default: 0,
     },
 
+    // others schema's
+
     sessions: [SessionSchema],
+    aiConfig: {
+      type: AiConfigSchema,
+      default: () => ({}),
+    },
 
     preferences: {
       theme: {

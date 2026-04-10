@@ -17,6 +17,9 @@ const config = {
 
   githubClientID: process.env.GITHUB_CLIENTID,
   githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+
+  // ai
+  GROQ_API_KEY: process.env.GROQ_API_KEY,
 };
 
 export default config;

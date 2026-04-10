@@ -22,9 +22,31 @@ export default function SignupPage() {
     setLoading(true);
     try {
       await authApi.registerApi(form);
-      navigate("/auth/login");
+      navigate("/");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const [socialLoading, setSocialLoading] = useState(null);
+
+  const googleLogin = () => {
+    try {
+      setSocialLoading("google"); // 🔥 start loading
+      authApi.googlelogin(); // redirects browser
+    } catch (error) {
+      setSocialLoading(null);
+      console.log(error.response);
+    }
+  };
+
+  const githubLogin = () => {
+    try {
+      setSocialLoading("github"); // 🔥 start loading
+      authApi.githublogin(); // redirects browser
+    } catch (error) {
+      setSocialLoading(null);
+      console.log(error.response);
     }
   };
 
@@ -41,20 +63,46 @@ export default function SignupPage() {
 
         {/* SOCIAL */}
         <div className="space-y-2 mb-5">
-          <button className="social-btn">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              className="w-4 h-4"
-            />
-            Continue with Google
+          <button
+            onClick={googleLogin}
+            className="social-btn"
+            disabled={socialLoading}
+          >
+            {socialLoading === "google" ? (
+              <>
+                <Loader2 size={14} className="animate-spin" />
+                Redirecting...
+              </>
+            ) : (
+              <>
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  className="w-4 h-4"
+                />
+                Continue with Google
+              </>
+            )}
           </button>
 
-          <button className="social-btn">
-            <img
-              src="https://www.svgrepo.com/show/512317/github-142.svg"
-              className="w-4 h-4 invert"
-            />
-            Continue with GitHub
+          <button
+            onClick={githubLogin}
+            className="social-btn"
+            disabled={socialLoading}
+          >
+            {socialLoading === "github" ? (
+              <>
+                <Loader2 size={14} className="animate-spin" />
+                Redirecting...
+              </>
+            ) : (
+              <>
+                <img
+                  src="https://www.svgrepo.com/show/512317/github-142.svg"
+                  className="w-4 h-4 invert"
+                />
+                Continue with GitHub
+              </>
+            )}
           </button>
         </div>
 

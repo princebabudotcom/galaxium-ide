@@ -34,6 +34,22 @@ const createUserWithGoogle = async (userData) => {
   return await User.create(userData);
 };
 
+const updateAiConfig = async (data, userId) => {
+  return await User.findOneAndUpdate(
+    { _id: userId },
+    { $set: { aiConfig: data } },
+    {
+      new: true,
+      runValidators: true,
+      upsert: true,
+    }
+  );
+};
+
+const aiConfig = async (userId) => {
+  return await User.findOne({ _id: userId }).select('aiConfig').lean();
+};
+
 export default {
   findByEmail,
   createUser,
@@ -43,4 +59,6 @@ export default {
   findByGoogleId,
   createUserWithGoogle,
   findByGithubId,
+  updateAiConfig,
+  aiConfig,
 };
