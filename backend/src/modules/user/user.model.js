@@ -85,6 +85,13 @@ const AiConfigSchema = new mongoose.Schema(
       max: 2,
     },
 
+    projects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+    ],
+
     /* ---------- RESPONSE STYLE ---------- */
     responseStyle: {
       type: String,

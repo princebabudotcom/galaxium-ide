@@ -40,11 +40,13 @@ app.use(passport.initialize());
 // routes
 import authRoutes from './modules/auth/auth.route.js';
 import userRoutes from './modules/user/user.route.js';
-import aiRoutes from './modules/ai/ai.route.js';
+// import aiRoutes from './modules/ai/ai.route.js';
+import projectRoute from './modules/projects/project.route.js';
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user', userRoutes);
-app.use('/api/v1/ai', aiRoutes);
+// app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/projects', projectRoute);
 
 app.get('/', (req, res) => {
   res.status(200).json({
